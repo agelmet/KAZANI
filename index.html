@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Αδαμαντία Καζάνη — Σχεσιακή Ψυχανάλυση</title>
+    <link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/agelmet/KAZANI/main/logogoskaz.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════════
+           CSS VARIABLES & RESET
+        ═══════════════════════════════════════════ */
+        :root {
+            --cream: #f7f3e8;
+            --blush: #dec2af;
+            --terracotta: #c37a67;
+            --sage: #a0a088;
+            --forest: #747c70;
+            --deep: #3a3d38;
+            --ink: #2a2c28;
+            --white: #fefdfb;
+
+            --font-display: 'Cormorant Garamond', Georgia, serif;
+            --font-body: 'Outfit', sans-serif;
+
+            --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-smooth: cubic-bezier(0.45, 0, 0.15, 1);
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 300;
+            color: var(--ink);
+            background: var(--cream);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.7;
+        }
+
+        img { max-width: 100%; display: block; }
+        a { text-decoration: none; color: inherit; }
+        button { border: none; background: none; cursor: pointer; font-family: inherit; }
+
+        /* ═══════════════════════════════════════════
+           UTILITY & ANIMATION CLASSES
+        ═══════════════════════════════════════════ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-delay-1 { transition-delay: 0.15s; }
+        .reveal-delay-2 { transition-delay: 0.3s; }
+        .reveal-delay-3 { transition-delay: 0.45s; }
+        .reveal-delay-4 { transition-delay: 0.6s; }
+
+        .section-padding {
+            padding: 120px 6%;
+        }
+
+        @media (max-width: 768px) {
+            .section-padding { padding: 80px 5%; }
+        }
+
+        /* ═══════════════════════════════════════════
+           NAVIGATION
+        ═══════════════════════════════════════════ */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: background 0.5s, backdrop-filter 0.5s, box-shadow 0.5s;
+            padding: 0 5%;
+        }
+        .nav.scrolled {
+            background: rgba(247, 243, 232, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 1px 0 rgba(116, 124, 112, 0.1);
+        }
+        .nav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 80px;
+        }
+        .nav-logo {
+            height: 55px;
+            width: auto;
+            object-fit: contain;
+            transition: transform 0.4s var(--ease-out), filter 0.4s;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.08));
+        }
+        .nav-logo:hover {
+            transform: scale(1.04);
+            filter: drop-shadow(0 4px 16px rgba(0,0,0,0.12));
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 36px;
+            list-style: none;
+        }
+        .nav-links a {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--deep);
+            position: relative;
+            padding: 4px 0;
+            transition: color 0.3s;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--terracotta);
+            transition: width 0.4s var(--ease-out);
+        }
+        .nav-links a:hover { color: var(--terracotta); }
+        .nav-links a:hover::after { width: 100%; }
+
+        .nav-cta {
+            font-size: 0.7rem !important;
+            letter-spacing: 0.18em !important;
+            padding: 10px 24px !important;
+            border: 1px solid var(--terracotta);
+            color: var(--terracotta) !important;
+            transition: all 0.4s var(--ease-out) !important;
+        }
+        .nav-cta:hover {
+            background: var(--terracotta);
+            color: var(--white) !important;
+        }
+        .nav-cta::after { display: none !important; }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            width: 28px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        .hamburger span {
+            display: block;
+            height: 1.5px;
+            background: var(--ink);
+            transition: all 0.4s var(--ease-out);
+            transform-origin: center;
+        }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(4px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(4px, -5px); }
+
+        /* Mobile menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: var(--cream);
+            z-index: 999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s var(--ease-out);
+        }
+        .mobile-menu.open { opacity: 1; pointer-events: all; }
+        .mobile-menu a {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            color: var(--ink);
+            transition: color 0.3s;
+        }
+        .mobile-menu a:hover { color: var(--terracotta); }
+
+        @media (max-width: 960px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .mobile-menu { display: flex; }
+        }
+
+        /* ═══════════════════════════════════════════
+           HERO SECTION
+        ═══════════════════════════════════════════ */
+        .hero {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 20%;
+            filter: brightness(0.92);
+        }
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to top,
+                rgba(42, 44, 40, 0.85) 0%,
+                rgba(42, 44, 40, 0.4) 35%,
+                rgba(42, 44, 40, 0.05) 60%,
+                transparent 100%
+            );
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 0 6% 10vh;
+            max-width: 800px;
+        }
+        .hero-label {
+            display: inline-block;
+            font-family: var(--font-body);
+            font-size: 0.65rem;
+            font-weight: 400;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--blush);
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: heroFadeUp 1s var(--ease-out) 0.6s forwards;
+        }
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 300;
+            line-height: 1.25;
+            color: var(--white);
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: heroFadeUp 1.1s var(--ease-out) 0.8s forwards;
+        }
+        .hero-subtitle {
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            font-weight: 200;
+            line-height: 1.8;
+            color: rgba(254, 253, 251, 0.75);
+            max-width: 560px;
+            margin: 0 auto 36px;
+            opacity: 0;
+            animation: heroFadeUp 1.1s var(--ease-out) 1s forwards;
+        }
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: heroFadeUp 1.1s var(--ease-out) 1.2s forwards;
+        }
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 36px;
+            font-size: 0.7rem;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            background: var(--terracotta);
+            color: var(--white);
+            border: 1px solid var(--terracotta);
+            transition: all 0.4s var(--ease-out);
+        }
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--white);
+            border-color: var(--white);
+        }
+        .btn-primary svg {
+            width: 14px; height: 14px;
+            transition: transform 0.3s var(--ease-out);
+        }
+        .btn-primary:hover svg { transform: translateX(4px); }
+
+        .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 36px;
+            font-size: 0.7rem;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(254, 253, 251, 0.7);
+            border: 1px solid rgba(254, 253, 251, 0.25);
+            transition: all 0.4s var(--ease-out);
+        }
+        .btn-ghost:hover {
+            border-color: var(--blush);
+            color: var(--blush);
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            opacity: 0;
+            animation: heroFadeUp 1s var(--ease-out) 1.6s forwards;
+        }
+        .hero-scroll-line {
+            width: 1px;
+            height: 48px;
+            background: rgba(254, 253, 251, 0.25);
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-scroll-line::after {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: var(--blush);
+            animation: scrollLine 2s ease-in-out infinite;
+        }
+
+        @keyframes heroFadeUp {
+            from { opacity: 0; transform: translateY(28px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes scrollLine {
+            0% { top: -50%; }
+            100% { top: 150%; }
+        }
+
+        @media (max-width: 768px) {
+            .hero { min-height: 100svh; }
+            .hero-bg img { object-position: center 15%; }
+            .hero-content { padding-bottom: 14vh; }
+        }
+
+        /* ═══════════════════════════════════════════
+           ABOUT / PHILOSOPHY SECTION
+        ═══════════════════════════════════════════ */
+        .about {
+            background: var(--white);
+        }
+        .about-grid {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 80px;
+            align-items: center;
+        }
+        .about-image-wrap {
+            position: relative;
+        }
+        .about-image-wrap::before {
+            content: '';
+            position: absolute;
+            top: -16px;
+            left: -16px;
+            width: 100%;
+            height: 100%;
+            border: 1px solid var(--blush);
+            z-index: 0;
+            transition: transform 0.6s var(--ease-out);
+        }
+        .about-image-wrap:hover::before {
+            transform: translate(-4px, -4px);
+        }
+        .about-image {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            filter: grayscale(10%) brightness(0.97);
+            box-shadow: 0 30px 80px -20px rgba(0,0,0,0.15);
+            transition: filter 0.6s, box-shadow 0.6s;
+        }
+        .about-image-wrap:hover .about-image {
+            filter: grayscale(0%) brightness(1);
+            box-shadow: 0 40px 100px -20px rgba(0,0,0,0.2);
+        }
+        .about-content {}
+        .section-eyebrow {
+            font-family: var(--font-body);
+            font-size: 0.65rem;
+            font-weight: 400;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--terracotta);
+            margin-bottom: 16px;
+        }
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            font-weight: 300;
+            line-height: 1.25;
+            color: var(--ink);
+            margin-bottom: 28px;
+        }
+        .section-title em {
+            font-style: italic;
+            color: var(--terracotta);
+        }
+        .about-text {
+            font-size: 0.92rem;
+            color: var(--deep);
+            line-height: 1.9;
+            margin-bottom: 16px;
+        }
+        .about-quote {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-style: italic;
+            color: var(--terracotta);
+            border-left: 2px solid var(--blush);
+            padding-left: 24px;
+            margin: 32px 0;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 900px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+            .about-image-wrap {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+        }
+
+        /* ═══════════════════════════════════════════
+           SERVICES
+        ═══════════════════════════════════════════ */
+        .services {
+            background: var(--cream);
+            position: relative;
+        }
+        .services-header {
+            text-align: center;
+            max-width: 640px;
+            margin: 0 auto 72px;
+        }
+        .services-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+        .service-card {
+            background: var(--white);
+            padding: 48px 36px 40px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out);
+            border: 1px solid transparent;
+        }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--terracotta);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s var(--ease-out);
+        }
+        .service-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 24px 64px -16px rgba(0,0,0,0.1);
+            border-color: rgba(195, 122, 103, 0.12);
+        }
+        .service-card:hover::before { transform: scaleX(1); }
+
+        .service-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 28px;
+        }
+        .service-icon svg {
+            width: 32px; height: 32px;
+            stroke: var(--terracotta);
+            fill: none;
+            stroke-width: 1.2;
+        }
+        .service-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            font-weight: 400;
+            color: var(--ink);
+            margin-bottom: 14px;
+            line-height: 1.3;
+        }
+        .service-card p {
+            font-size: 0.85rem;
+            color: var(--deep);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .service-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .service-tag {
+            font-size: 0.65rem;
+            letter-spacing: 0.08em;
+            padding: 5px 12px;
+            background: var(--cream);
+            color: var(--forest);
+            font-weight: 400;
+        }
+
+        @media (max-width: 960px) {
+            .services-grid { grid-template-columns: 1fr; max-width: 540px; }
+        }
+
+        /* ═══════════════════════════════════════════
+           CREDENTIALS / PILLARS
+        ═══════════════════════════════════════════ */
+        .credentials {
+            background: var(--ink);
+            color: var(--cream);
+            position: relative;
+            overflow: hidden;
+        }
+        .credentials::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(195,122,103,0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .credentials-header {
+            text-align: center;
+            max-width: 640px;
+            margin: 0 auto 72px;
+        }
+        .credentials-header .section-eyebrow { color: var(--blush); }
+        .credentials-header .section-title { color: var(--cream); }
+
+        .credentials-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+        .credential-card {
+            padding: 44px 40px;
+            border: 1px solid rgba(222, 194, 175, 0.1);
+            transition: border-color 0.5s, background 0.5s;
+            position: relative;
+        }
+        .credential-card:hover {
+            border-color: rgba(222, 194, 175, 0.25);
+            background: rgba(222, 194, 175, 0.03);
+        }
+        .credential-number {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 300;
+            color: var(--terracotta);
+            opacity: 0.4;
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+        .credential-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: var(--blush);
+            margin-bottom: 12px;
+        }
+        .credential-card p {
+            font-size: 0.85rem;
+            color: rgba(247, 243, 232, 0.6);
+            line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+            .credentials-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ═══════════════════════════════════════════
+           SPACE / GALLERY
+        ═══════════════════════════════════════════ */
+        .space {
+            background: var(--white);
+        }
+        .space-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 60px;
+        }
+        .gallery-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .gallery-item {
+            margin-bottom: 28px;
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.7s var(--ease-out), filter 0.5s;
+            filter: brightness(0.96);
+        }
+        .gallery-item:hover img {
+            transform: scale(1.02);
+            filter: brightness(1);
+        }
+        .gallery-item::after {
+            content: 'Προβολή';
+            position: absolute;
+            bottom: 16px;
+            right: 20px;
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--white);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .gallery-item:hover::after { opacity: 0.7; }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: rgba(0,0,0,0.92);
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            cursor: pointer;
+            animation: lbFade 0.3s ease;
+        }
+        .lightbox.active { display: flex; }
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: contain;
+            box-shadow: 0 20px 80px rgba(0,0,0,0.5);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 28px;
+            right: 32px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .lightbox-close svg {
+            stroke: var(--cream);
+            width: 24px;
+            height: 24px;
+        }
+        @keyframes lbFade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ═══════════════════════════════════════════
+           REVIEWS / TESTIMONIALS
+        ═══════════════════════════════════════════ */
+        .reviews {
+            background: var(--cream);
+        }
+        .reviews-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 60px;
+        }
+        .reviews-track-wrap {
+            position: relative;
+            overflow: hidden;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .reviews-track {
+            display: flex;
+            gap: 24px;
+            animation: reviewsScroll 45s linear infinite;
+            width: max-content;
+        }
+        .reviews-track:hover { animation-play-state: paused; }
+
+        .review-card {
+            flex: 0 0 380px;
+            background: var(--white);
+            padding: 36px 32px 32px;
+            border: 1px solid rgba(222,194,175,0.15);
+            transition: border-color 0.4s;
+        }
+        .review-card:hover { border-color: rgba(195,122,103,0.25); }
+        .review-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
+        .review-score {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: var(--terracotta);
+        }
+        .review-score span {
+            font-size: 0.85rem;
+            font-weight: 300;
+            color: var(--sage);
+        }
+        .review-doctoranytime {
+            height: 20px;
+            width: auto;
+            opacity: 0.5;
+        }
+        .review-text {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-style: italic;
+            color: var(--deep);
+            line-height: 1.75;
+            margin-bottom: 20px;
+            min-height: 72px;
+        }
+        .review-meta {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+        }
+        .review-name {
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--ink);
+        }
+        .review-date {
+            font-size: 0.7rem;
+            color: var(--sage);
+        }
+
+        @keyframes reviewsScroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+        .reviews-cta {
+            text-align: center;
+            margin-top: 48px;
+        }
+        .reviews-cta a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--terracotta);
+            border-bottom: 1px solid transparent;
+            padding-bottom: 2px;
+            transition: border-color 0.3s;
+        }
+        .reviews-cta a:hover { border-color: var(--terracotta); }
+        .reviews-cta img {
+            height: 16px;
+            display: inline-block;
+        }
+
+        /* ═══════════════════════════════════════════
+           CONTACT / CTA SECTION
+        ═══════════════════════════════════════════ */
+        .contact {
+            background: var(--ink);
+            color: var(--cream);
+        }
+        .contact-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 80px;
+            align-items: start;
+        }
+        .contact-main {}
+        .contact-main .section-eyebrow { color: var(--blush); }
+        .contact-main .section-title { color: var(--cream); margin-bottom: 20px; }
+        .contact-desc {
+            font-size: 0.9rem;
+            color: rgba(247, 243, 232, 0.6);
+            line-height: 1.8;
+            margin-bottom: 36px;
+            max-width: 480px;
+        }
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 42px;
+            background: var(--terracotta);
+            color: var(--white);
+            font-size: 0.7rem;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            transition: all 0.4s var(--ease-out);
+        }
+        .contact-btn:hover {
+            background: var(--blush);
+            color: var(--ink);
+        }
+        .contact-btn svg {
+            width: 16px; height: 16px;
+        }
+
+        .contact-info {}
+        .contact-info-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--blush);
+            margin-bottom: 24px;
+        }
+        .contact-item {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        .contact-item svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--terracotta);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .contact-item-text {
+            font-size: 0.88rem;
+            color: rgba(247, 243, 232, 0.7);
+            line-height: 1.6;
+        }
+        .contact-item-text a {
+            color: rgba(247, 243, 232, 0.7);
+            transition: color 0.3s;
+        }
+        .contact-item-text a:hover { color: var(--blush); }
+
+        .contact-hours {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(222, 194, 175, 0.1);
+        }
+        .contact-hours-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--blush);
+            margin-bottom: 12px;
+        }
+        .contact-hours-text {
+            font-size: 0.85rem;
+            color: rgba(247, 243, 232, 0.6);
+            line-height: 1.7;
+        }
+
+        .contact-socials {
+            display: flex;
+            gap: 16px;
+            margin-top: 28px;
+        }
+        .contact-socials a {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(222, 194, 175, 0.15);
+            transition: all 0.3s var(--ease-out);
+        }
+        .contact-socials a:hover {
+            border-color: var(--terracotta);
+            background: rgba(195, 122, 103, 0.08);
+        }
+        .contact-socials svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--blush);
+        }
+
+        @media (max-width: 900px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+        }
+
+        /* ═══════════════════════════════════════════
+           FOOTER
+        ═══════════════════════════════════════════ */
+        .footer {
+            background: var(--ink);
+            border-top: 1px solid rgba(222, 194, 175, 0.08);
+            padding: 28px 6%;
+        }
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .footer-copy {
+            font-size: 0.72rem;
+            color: rgba(247, 243, 232, 0.35);
+        }
+        .footer-credit {
+            font-size: 0.72rem;
+            color: rgba(247, 243, 232, 0.35);
+        }
+        .footer-credit a {
+            color: rgba(247, 243, 232, 0.5);
+            transition: color 0.3s;
+        }
+        .footer-credit a:hover { color: var(--blush); }
+
+        /* ═══════════════════════════════════════════
+           APPROACH / JOURNEY
+        ═══════════════════════════════════════════ */
+        .approach {
+            background: var(--white);
+            position: relative;
+        }
+        .approach-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 72px;
+        }
+        .approach-steps {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .approach-steps::before {
+            content: '';
+            position: absolute;
+            left: 23px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: var(--blush);
+            opacity: 0.4;
+        }
+        .approach-step {
+            display: flex;
+            gap: 40px;
+            padding-bottom: 56px;
+            position: relative;
+        }
+        .approach-step:last-child { padding-bottom: 0; }
+        .approach-step-num {
+            flex-shrink: 0;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--cream);
+            border: 1px solid var(--blush);
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: var(--terracotta);
+            z-index: 1;
+        }
+        .approach-step h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: var(--ink);
+            margin-bottom: 8px;
+        }
+        .approach-step p {
+            font-size: 0.85rem;
+            color: var(--deep);
+            line-height: 1.8;
+        }
+
+        @media (max-width: 600px) {
+            .approach-step { gap: 24px; }
+            .approach-steps::before { left: 23px; }
+        }
+
+        /* ═══════════════════════════════════════════
+           DIVIDER LINE
+        ═══════════════════════════════════════════ */
+        .divider {
+            width: 48px;
+            height: 1px;
+            background: var(--blush);
+            margin: 0 auto;
+        }
+
+        /* ═══════════════════════════════════════════
+           RESPONSIVE FINE-TUNING
+        ═══════════════════════════════════════════ */
+        @media (max-width: 480px) {
+            .review-card { flex: 0 0 300px; padding: 28px 24px 24px; }
+            .service-card { padding: 36px 28px 32px; }
+            .credential-card { padding: 32px 28px; }
+            .btn-primary, .btn-ghost { padding: 12px 24px; font-size: 0.65rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ════════════════════════════════════════
+         NAVIGATION
+    ════════════════════════════════════════ -->
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="#hero">
+                <img src="https://raw.githubusercontent.com/agelmet/KAZANI/main/logogoskaz.jpg" alt="Αδαμαντία Καζάνη" class="nav-logo">
+            </a>
+            <ul class="nav-links">
+                <li><a href="#about">Η Ψυχολογος</a></li>
+                <li><a href="#services">Υπηρεσιες</a></li>
+                <li><a href="#credentials">Εμπειρια</a></li>
+                <li><a href="#space">Ο Χωρος</a></li>
+                <li><a href="#reviews">Εμπειριες</a></li>
+                <li><a href="#contact" class="nav-cta">Ραντεβου</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#about" onclick="closeMenu()">Η Ψυχολόγος</a>
+        <a href="#services" onclick="closeMenu()">Υπηρεσίες</a>
+        <a href="#credentials" onclick="closeMenu()">Εμπειρία</a>
+        <a href="#space" onclick="closeMenu()">Ο Χώρος</a>
+        <a href="#reviews" onclick="closeMenu()">Εμπειρίες</a>
+        <a href="#contact" onclick="closeMenu()">Κλείστε Ραντεβού</a>
+    </div>
+
+
+    <!-- ════════════════════════════════════════
+         HERO
+    ════════════════════════════════════════ -->
+    <section class="hero" id="hero">
+        <div class="hero-bg">
+            <img src="https://raw.githubusercontent.com/agelmet/KAZANI/main/%CE%9A%CE%B1%CE%B6%CE%AC%CE%BD%CE%B7_%CE%91%CE%B4%CE%B1%CE%BC%CE%B1%CE%BD%CF%84%CE%AF%CE%B1_Prv_4.jpeg" alt="Αδαμαντία Καζάνη — Ψυχολόγος">
+        </div>
+
+        <div class="hero-content">
+            <span class="hero-label">Ψυχολόγος &middot; Ψυχοθεραπεύτρια</span>
+            <h1 class="hero-title">Σχεσιακή Ψυχανάλυση: Επουλώνοντας το Τραύμα μέσα από την Αληθινή Σύνδεση</h1>
+            <p class="hero-subtitle">Ένας ασφαλής χώρος στην Καλλιθέα, όπου η επιστημονική αυστηρότητα συναντά τη γνήσια ανθρώπινη παρουσία.</p>
+            <div class="hero-actions">
+                <a href="#contact" class="btn-primary">
+                    Κλείστε Ραντεβού
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <a href="#about" class="btn-ghost">Γνωρίστε Με</a>
+            </div>
+        </div>
+
+        <div class="hero-scroll">
+            <div class="hero-scroll-line"></div>
+        </div>
+    </section>
+
+
+    <!-- ════════════════════════════════════════
+         ABOUT
+    ════════════════════════════════════════ -->
+    <section class="about section-padding" id="about">
+        <div class="about-grid">
+            <div class="about-image-wrap reveal">
+                <img src="https://raw.githubusercontent.com/agelmet/KAZANI/main/%CE%9A%CE%B1%CE%B6%CE%AC%CE%BD%CE%B7_%CE%91%CE%B4%CE%B1%CE%BC%CE%B1%CE%BD%CF%84%CE%AF%CE%B1_Prv_7.jpeg" alt="Αδαμαντία Καζάνη" class="about-image">
+            </div>
+            <div class="about-content">
+                <span class="section-eyebrow reveal">Αδαμαντία Καζάνη &middot; BA, MSc</span>
+                <h2 class="section-title reveal reveal-delay-1">Η θεραπευτική σχέση ως <em>κύριο όχημα</em> αλλαγής</h2>
+                <p class="about-text reveal reveal-delay-2">Η Αδαμαντία Καζάνη είναι αδειούχος Ψυχολόγος (Αρ. Αδείας: 1064586) και Ψυχοθεραπεύτρια, με ιδιωτικό γραφείο στην Καλλιθέα. Μετά τις σπουδές της στο τμήμα Ψυχολογίας του Παντείου Πανεπιστημίου, ολοκλήρωσε το μεταπτυχιακό της (MSc) στην Κλινική Ψυχολογία στο Utrecht University της Ολλανδίας.</p>
+                <p class="about-text reveal reveal-delay-2">Η κλινική της ταυτότητα εδράζεται στη Σχεσιακή Ψυχαναλυτική Ψυχοθεραπεία. Σε αντίθεση με την παραδοσιακή ψυχανάλυση, η Σχεσιακή προσέγγιση βλέπει την ίδια τη θεραπευτική σχέση ως το κύριο όχημα αλλαγής. Ο θεραπευτής είναι αυθεντικά παρών, βοηθώντας τον θεραπευόμενο να κατανοήσει πώς τα παρελθοντικά τραύματα επαναλαμβάνονται στις σημερινές του σχέσεις.</p>
+                <blockquote class="about-quote reveal reveal-delay-3">Η κλινική της πορεία έχει σφυρηλατηθεί σε εξαιρετικά απαιτητικά περιβάλλοντα — Νοσοκομείο «Σωτηρία», Κοινωνικό Ιατρείο Εξαρχείων — γεγονός που της επιτρέπει να στέκεται απέναντι στον βαθύ ανθρώπινο πόνο με ψυχραιμία και αποδοχή.</blockquote>
+                <p class="about-text reveal reveal-delay-3">Παράλληλα, διαθέτει πλούσιο ερευνητικό και συγγραφικό έργο, με δημοσιεύσεις και συμμετοχές σε διεθνή συνέδρια (IARPP, 2025). Στο γραφείο της παρέχει έναν απόλυτα ασφαλή χώρο για να ανακαλύψετε τις βαθύτερες πτυχές του εαυτού σας και να απεγκλωβιστείτε από τον ψυχικό πόνο.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ════════════════════════════════════════
+         SERVICES
+    ════════════════════════════════════════ -->
+    <section class="services section-padding" id="services">
+        <div class="services-header">
+            <span class="section-eyebrow reveal">Εξειδικευμένες Υπηρεσίες</span>
+            <h2 class="section-title reveal reveal-delay-1">Πώς Μπορώ να <em>Βοηθήσω</em></h2>
+        </div>
+
+        <div class="services-grid">
+
+            <div class="service-card reveal">
+                <div class="service-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 21C12 21 3 13.5 3 8.5C3 5.42 5.42 3 8.5 3C10.24 3 11.91 3.81 12 5C12.09 3.81 13.76 3 15.5 3C18.58 3 21 5.42 21 8.5C21 13.5 12 21 12 21Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <h3>Ψυχικό Τραύμα &amp; Ψυχοσωματικές Διαταραχές</h3>
+                <p>Το ψυχικό τραύμα συχνά αποθηκεύεται στο σώμα, δημιουργώντας χρόνιο άγχος ή τάσεις φυγής. Μέσα από τη Σχεσιακή Ψυχανάλυση, προσφέρεται ένας ασφαλής χώρος επεξεργασίας, με τον δικό σας ρυθμό, δίνοντας φωνή σε όσα δεν μπόρεσαν ποτέ να ειπωθούν.</p>
+                <div class="service-tags">
+                    <span class="service-tag">Τραύμα</span>
+                    <span class="service-tag">Ψυχοσωματικά</span>
+                    <span class="service-tag">Συνεδρία 45'</span>
+                </div>
+            </div>
+
+            <div class="service-card reveal reveal-delay-1">
+                <div class="service-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke-linecap="round"/></svg>
+                </div>
+                <h3>Κατάθλιψη, Θλίψη &amp; Εξαρτητικές Συμπεριφορές</h3>
+                <p>Η βαθιά θλίψη και οι εξαρτητικές συμπεριφορές είναι συχνά μηχανισμοί αντιμετώπισης ενός αβάσταχτου βάρους. Μαζί, χαρτογραφούμε τα εσωτερικά εμπόδια, ώστε να μετακινηθείτε από την παραίτηση στη δημιουργία νοήματος.</p>
+                <div class="service-tags">
+                    <span class="service-tag">Κατάθλιψη</span>
+                    <span class="service-tag">Εξαρτήσεις</span>
+                    <span class="service-tag">Συνεδρία 45'</span>
+                </div>
+            </div>
+
+            <div class="service-card reveal reveal-delay-2">
+                <div class="service-icon">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2" stroke-linecap="round"/><line x1="9" y1="9" x2="9.01" y2="9" stroke-linecap="round" stroke-width="2"/><line x1="15" y1="9" x2="15.01" y2="9" stroke-linecap="round" stroke-width="2"/></svg>
+                </div>
+                <h3>Αυτοεκτίμηση, Burnout &amp; Ανάπτυξη Ταυτότητας</h3>
+                <p>Η εξουθένωση και η χαμηλή αυτοεκτίμηση πηγάζουν από την ασυνείδητη ανάγκη να ικανοποιούμε τους άλλους. Εργαζόμαστε για τη θέσπιση υγιών ορίων, τη διεκδίκηση των επιθυμιών σας και την αποδοχή της αυθεντικής σας εικόνας.</p>
+                <div class="service-tags">
+                    <span class="service-tag">Burnout</span>
+                    <span class="service-tag">Αυτοεικόνα</span>
+                    <span class="service-tag">Συνεδρία 45'</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ════════════════════════════════════════
+         CREDENTIALS / PILLARS
+    ════════════════════════════════════════ -->
+    <section class="credentials section-padding" id="credentials">
+        <div class="credentials-header">
+            <span class="section-eyebrow reveal">Κλινικό Υπόβαθρο</span>
+            <h2 class="section-title reveal reveal-delay-1">Τέσσερις Πυλώνες <em>Αξιοπιστίας</em></h2>
+        </div>
+        <div class="credentials-grid">
+
+            <div class="credential-card reveal">
+                <div class="credential-number">01</div>
+                <h3>Διεθνές Επιστημονικό Προφίλ</h3>
+                <p>Σπουδές στο Utrecht University και ενεργό μέλος της Διεθνούς Ένωσης Σχεσιακής Ψυχανάλυσης (IARPP) και της Αμερικανικής Ένωσης Ομαδικής Ψυχοθεραπείας (AGPA) — συνεχής εναρμόνιση με τις παγκόσμιες εξελίξεις της ψυχικής υγείας.</p>
+            </div>
+
+            <div class="credential-card reveal reveal-delay-1">
+                <div class="credential-number">02</div>
+                <h3>Ερευνητική &amp; Συγγραφική Παρουσία</h3>
+                <p>Εισηγήτρια σε διεθνή συνέδρια (IARPP 2025) και συγγραφική συνεισφορά στον «Τρίτο Συλλογικό Τόμο Σχεσιακής Ψυχανάλυσης». Δεν ακολουθεί απλώς τη γνώση — τη συνδιαμορφώνει.</p>
+            </div>
+
+            <div class="credential-card reveal reveal-delay-2">
+                <div class="credential-number">03</div>
+                <h3>Εμπειρία Πρώτης Γραμμής</h3>
+                <p>Κλινική εργασία με τοξικοεξαρτημένους και σοβαρά ψυχιατρικά περιστατικά (Κοινωνικό Ιατρείο Εξαρχείων, Νοσοκομείο Σωτηρία, 18 ΑΝΩ) — ικανότητα να στέκεται απέναντι στον βαθύ πόνο με αποδοχή και ψυχραιμία.</p>
+            </div>
+
+            <div class="credential-card reveal reveal-delay-3">
+                <div class="credential-number">04</div>
+                <h3>Ολιστική Ενσυναίσθηση</h3>
+                <p>Υποστήριξη παιδιών και ενηλίκων με αναπτυξιακές διαταραχές μέσω θεραπευτικής ιππασίας — πίστη στην εναλλακτική, μη-λεκτική θεραπευτική επικοινωνία και σεβασμός στη νευροποικιλομορφία.</p>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ════════════════════════════════════════
+         APPROACH / JOURNEY
+    ════════════════════════════════════════ -->
+    <section class="approach section-padding" id="approach">
+        <div class="approach-header">
+            <span class="section-eyebrow reveal">Η Πορεία</span>
+            <h2 class="section-title reveal reveal-delay-1">Τα Βήματα <em>Μαζί Μας</em></h2>
+        </div>
+        <div class="approach-steps">
+
+            <div class="approach-step reveal">
+                <div class="approach-step-num">1</div>
+                <div>
+                    <h3>Πρώτη Επικοινωνία</h3>
+                    <p>Η πρώτη σας κίνηση φροντίδας. Επικοινωνήστε τηλεφωνικά ή μέσω φόρμας για να ορίσουμε τη μέρα και ώρα που σας εξυπηρετεί.</p>
+                </div>
+            </div>
+
+            <div class="approach-step reveal reveal-delay-1">
+                <div class="approach-step-num">2</div>
+                <div>
+                    <h3>Αξιολόγηση &amp; Γνωριμία</h3>
+                    <p>Μια πρώτη συνάντηση σε ασφαλές περιβάλλον. Ακούμε τις ανάγκες σας χωρίς καμία επίκριση, χτίζοντας τη βάση μιας αυθεντικής θεραπευτικής σχέσης.</p>
+                </div>
+            </div>
+
+            <div class="approach-step reveal reveal-delay-2">
+                <div class="approach-step-num">3</div>
+                <div>
+                    <h3>Θεραπευτικό Πλάνο</h3>
+                    <p>Σχεδιάζουμε μαζί μια προσέγγιση που ταιριάζει αποκλειστικά στη δική σας ιστορία, τις ανάγκες και τον ρυθμό σας.</p>
+                </div>
+            </div>
+
+            <div class="approach-step reveal reveal-delay-3">
+                <div class="approach-step-num">4</div>
+                <div>
+                    <h3>Επούλωση &amp; Σύνδεση</h3>
+                    <p>Σταθερά βήματα προς την αυτογνωσία, την ανθεκτικότητα και την απελευθέρωση από τα επαναλαμβανόμενα μοτίβα πόνου.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ════════════════════════════════════════
+         SPACE / GALLERY
+    ════════════════════════════════════════ -->
+    <section class="space section-padding" id="space">
+        <div class="space-header">
+            <span class="section-eyebrow reveal">Ο Χώρος</span>
+            <h2 class="section-title reveal reveal-delay-1">Σχεδιασμένος για <em>Ασφάλεια</em></h2>
+            <p class="about-text reveal reveal-delay-2" style="text-align:center; max-width:520px; margin: 0 auto;">Ένα περιβάλλον ηρεμίας, ζεστασιάς και απόλυτης ιδιωτικότητας στην Καλλιθέα.</p>
+        </div>
+
+        <div class="gallery-container">
+            <div class="gallery-item reveal" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/agelmet/KAZANI/main/%CE%9A%CE%B1%CE%B6%CE%AC%CE%BD%CE%B7_%CE%91%CE%B4%CE%B1%CE%BC%CE%B1%CE%BD%CF%84%CE%AF%CE%B1_Prv_3.jpeg" alt="Χώρος γραφείου">
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ════════════════════════════════════════
+         LIGHTBOX
+    ════════════════════════════════════════ -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <div class="lightbox-close">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </div>
+        <img id="lightboxImg" src="" alt="Μεγέθυνση">
+    </div>
+
+
+    <!-- ════════════════════════════════════════
+         REVIEWS
+    ════════════════════════════════════════ -->
+    <section class="reviews section-padding" id="reviews">
+        <div class="reviews-header">
+            <span class="section-eyebrow reveal">Εμπιστοσύνη</span>
+            <h2 class="section-title reveal reveal-delay-1">Εμπειρίες <em>Θεραπευόμενων</em></h2>
+        </div>
+
+        <div class="reviews-track-wrap">
+            <div class="reviews-track" id="reviewsTrack">
+
+                <!-- Card 1 -->
+                <div class="review-card">
+                    <div class="review-top">
+                        <div class="review-score">10.0 <span>/ 10</span></div>
+                        <img src="https://www.doctoranytime.gr/images/logo-rebranding.svg" alt="doctoranytime" class="review-doctoranytime">
+                    </div>
+                    <p class="review-text">Χρειάστηκα βοήθεια σε μια κρίσιμη καμπή της ζωής μου. Ήταν η πρώτη που ένιωσα άνετα από την πρώτη στιγμή και κατάφερα να νιώσω κατανόηση και ασφάλεια.</p>
+                    <div class="review-meta">
+                        <span class="review-name">Dimitris</span>
+                        <span class="review-date">01 Μαρτίου 2026</span>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="review-card">
+                    <div class="review-top">
+                        <div class="review-score">10.0 <span>/ 10</span></div>
+                        <img src="https://www.doctoranytime.gr/images/logo-rebranding.svg" alt="doctoranytime" class="review-doctoranytime">
+                    </div>
+                    <p class="review-text">Η Αδαμαντία είναι μια εξαιρετική ψυχολόγος που πραγματικά πιάνει τα νοήματα της ψυχής σου. Αξίζει να κάνει κάποιος εποικοδομητική συζήτηση μαζί της.</p>
+                    <div class="review-meta">
+                        <span class="review-name">Αγγελική</span>
+                        <span class="review-date">03 Φεβρουαρίου 2026</span>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="review-card">
+                    <div class="review-top">
+                        <div class="review-score">10.0 <span>/ 10</span></div>
+                        <img src="https://www.doctoranytime.gr/images/logo-rebranding.svg" alt="doctoranytime" class="review-doctoranytime">
+                    </div>
+                    <p class="review-text">Εξαιρετική επαγγελματίας. Πολύ υποστηρικτική και προσιτή, με έκανε να νιώσω άνετα.</p>
+                    <div class="review-meta">
+                        <span class="review-name">Αθηνά</span>
+                        <span class="review-date">21 Ιανουαρίου 2026</span>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="review-card">
+                    <div class="review-top">
+                        <div class="review-score">9.8 <span>/ 10</span></div>
+                        <img src="https://www.doctoranytime.gr/images/logo-rebranding.svg" alt="doctoranytime" class="review-doctoranytime">
+                    </div>
+                    <p class="review-text">Ταιριάξαμε από την πρώτη στιγμή. Με έχει βοηθήσει να δω πράγματα για μένα που δεν είχα αντιληφθεί ως τώρα. Γίνεται ουσιαστική δουλειά. Τη συνιστώ ανεπιφύλακτα.</p>
+                    <div class="review-meta">
+                        <span class="review-name">Γιώργος</span>
+                        <span class="review-date">20 Ιανουαρίου 2026</span>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="review-card">
+                    <div class="review-top">
+                        <div class="review-score">10.0 <span>/ 10</span></div>
+                        <img src="https://www.doctoranytime.gr/images/logo-rebranding.svg" alt="doctoranytime" class="review-doctoranytime">
+                    </div>
+                    <p class="review-text">Από την πρώτη συνεδρία ένιωσα ασφάλεια και κατανόηση. Η δουλειά που κάνουμε με βοηθάει να είμαι πιο ήρεμη και να καταλαβαίνω καλύτερα τον εαυτό μου.</p>
+                    <div class="review-meta">
+                        <span class="review-name">Αφροδίτη</span>
+                        <span class="review-date">18 Δεκεμβρίου 2025</span>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="review-card">
+                    <div class="review-top">
+                        <div class="review-score">10.0 <span>/ 10</span></div>
+                        <img src="https://www.doctoranytime.gr/images/logo-rebranding.svg" alt="doctoranytime" class="review-doctoranytime">
+                    </div>
+                    <p class="review-text">Φοβερή επαγγελματίας. Εμπνέει ασφάλεια, είναι κατανοητική και πραγματικά βοηθητική. Τη συστήνω ανεπιφύλακτα.</p>
+                    <div class="review-meta">
+                        <span class="review-name">Elena</span>
+                        <span class="review-date">09 Δεκεμβρίου 2025</span>
+                    </div>
+                </div>
+
+                <!-- Card 7 -->
+                <div class="review-card">
+                    <div class="review-top">
+                        <div class="review-score">10.0 <span>/ 10</span></div>
+                        <img src="https://www.doctoranytime.gr/images/logo-rebranding.svg" alt="doctoranytime" class="review-doctoranytime">
+                    </div>
+                    <p class="review-text">Είναι μια ήρεμη παρουσία που σου εμπνέει εμπιστοσύνη να ανοιχτείς. Πάντα με χαμόγελο, ακόμα και στα πιο δύσκολα κομμάτια, είναι εκεί να σε συμβουλέψει.</p>
+                    <div class="review-meta">
+                        <span class="review-name">Rafaela</span>
+                        <span class="review-date">09 Δεκεμβρίου 2025</span>
+                    </div>
+                </div>
+
+                <!-- Card 8 -->
+                <div class="review-card">
+                    <div class="review-top">
+                        <div class="review-score">10.0 <span>/ 10</span></div>
+                        <img src="https://www.doctoranytime.gr/images/logo-rebranding.svg" alt="doctoranytime" class="review-doctoranytime">
+                    </div>
+                    <p class="review-text">Την Αδαμαντία Καζάνη τη συνιστώ ανεπιφύλακτα. Αξιόπιστη, σοβαρή επαγγελματίας, με συνέπεια και σεβασμό. Μια ασφαλή, έγκυρη επιλογή.</p>
+                    <div class="review-meta">
+                        <span class="review-name">Marina</span>
+                        <span class="review-date">23 Νοεμβρίου 2025</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="reviews-cta reveal">
+            <a href="https://www.doctoranytime.gr/d/Psychologos/kazani-adamantia-k" target="_blank" rel="noopener">
+                Περισσότερα στο 
+                <img src="https://www.doctoranytime.gr/images/logo-rebranding.svg" alt="doctoranytime">
+            </a>
+        </div>
+    </section>
+
+
+    <!-- ════════════════════════════════════════
+         CONTACT / CTA
+    ════════════════════════════════════════ -->
+    <section class="contact section-padding" id="contact">
+        <div class="contact-grid">
+
+            <div class="contact-main">
+                <span class="section-eyebrow reveal">Επικοινωνία</span>
+                <h2 class="section-title reveal reveal-delay-1">Η Επούλωση Ξεκινά με <em>Ένα Βήμα</em></h2>
+                <p class="contact-desc reveal reveal-delay-2">Επικοινωνήστε μαζί μας για να ορίσουμε την πρώτη σας συνεδρία. Κάθε ερώτηση είναι ευπρόσδεκτη, σε ένα περιβάλλον απόλυτης αποδοχής.</p>
+                <a href="tel:6942493006" class="contact-btn reveal reveal-delay-3">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                    Κλείστε Ραντεβού
+                </a>
+            </div>
+
+            <div class="contact-info">
+                <div class="contact-info-label reveal">Στοιχεία Επικοινωνίας</div>
+
+                <div class="contact-item reveal">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <div class="contact-item-text">Αραπάκη 56, Καλλιθέα, Αττική</div>
+                </div>
+
+                <div class="contact-item reveal reveal-delay-1">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                    <div class="contact-item-text"><a href="tel:6942493006">694 249 3006</a></div>
+                </div>
+
+                <div class="contact-item reveal reveal-delay-2">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 0"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                    <div class="contact-item-text"><a href="https://www.doctoranytime.gr/d/Psychologos/kazani-adamantia-k" target="_blank" rel="noopener">doctoranytime.gr</a></div>
+                </div>
+
+                <div class="contact-hours reveal reveal-delay-3">
+                    <div class="contact-hours-label">Ωράριο Λειτουργίας</div>
+                    <div class="contact-hours-text">Δευτέρα — Παρασκευή<br>Κατόπιν Ραντεβού</div>
+                </div>
+
+                <div class="contact-socials reveal reveal-delay-3">
+                    <a href="https://www.instagram.com/adamantia.kazani/" target="_blank" rel="noopener" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                    </a>
+                    <a href="https://www.facebook.com/p/%CE%91%CE%B4%CE%B1%CE%BC%CE%B1%CE%BD%CF%84%CE%AF%CE%B1-%CE%9A%CE%B1%CE%B6%CE%AC%CE%BD%CE%B7-%CE%A8%CF%85%CF%87%CE%BF%CE%BB%CF%8C%CE%B3%CE%BF%CF%82-%CE%95%CE%B9%CE%B4%CE%A8%CF%85%CF%87%CE%BF%CE%B8%CE%B5%CF%81%CE%B1%CF%80%CE%B5%CF%8D%CF%84%CF%81%CE%B9%CE%B1-BA-MSc-61559700903736/" target="_blank" rel="noopener" aria-label="Facebook">
+                        <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                    <a href="https://www.doctoranytime.gr/d/Psychologos/kazani-adamantia-k" target="_blank" rel="noopener" aria-label="Doctoranytime">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--blush)" stroke-width="1.5"><path d="M12 2a10 10 0 0110 10c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2z"/><path d="M8 12h8M12 8v8" stroke-linecap="round"/></svg>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ════════════════════════════════════════
+         FOOTER
+    ════════════════════════════════════════ -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <span class="footer-copy">&copy; 2026 Αδαμαντία Καζάνη. Όλα τα δικαιώματα διατηρούνται.</span>
+            <span class="footer-credit">Designed by <a href="https://advonmedia.com" target="_blank" rel="noopener">Advon Media</a></span>
+        </div>
+    </footer>
+
+
+    <!-- ════════════════════════════════════════
+         SCRIPTS
+    ════════════════════════════════════════ -->
+    <script>
+        // ── Nav scroll ──
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        // ── Mobile menu ──
+        function toggleMenu() {
+            document.getElementById('hamburger').classList.toggle('active');
+            document.getElementById('mobileMenu').classList.toggle('open');
+            document.body.style.overflow = document.getElementById('mobileMenu').classList.contains('open') ? 'hidden' : '';
+        }
+        function closeMenu() {
+            document.getElementById('hamburger').classList.remove('active');
+            document.getElementById('mobileMenu').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        // ── Reveal on scroll ──
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // ── Lightbox ──
+        function openLightbox(el) {
+            const img = el.querySelector('img');
+            document.getElementById('lightboxImg').src = img.src;
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+
+        // ── Duplicate reviews for infinite scroll ──
+        const track = document.getElementById('reviewsTrack');
+        track.innerHTML += track.innerHTML;
+    </script>
+
+</body>
+</html>
