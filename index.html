@@ -59,12 +59,12 @@
         ═══════════════════════════════════════════ */
         .reveal {
             opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+            transform: translateY(50px) scale(0.95);
+            transition: all 1s var(--ease-out);
         }
         .reveal.visible {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
         .reveal-delay-1 { transition-delay: 0.15s; }
         .reveal-delay-2 { transition-delay: 0.3s; }
@@ -93,7 +93,7 @@
             padding: 0 5%;
         }
         .nav.scrolled {
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
         .nav-inner {
             max-width: 1400px;
@@ -150,11 +150,14 @@
             padding: 10px 24px !important;
             border: 1px solid var(--terracotta);
             color: var(--terracotta) !important;
+            border-radius: 40px; /* softer look */
             transition: all 0.4s var(--ease-out) !important;
         }
         .nav-cta:hover {
             background: var(--terracotta);
             color: var(--white) !important;
+            box-shadow: 0 8px 20px rgba(195,122,103,0.25);
+            transform: translateY(-2px);
         }
         .nav-cta::after { display: none !important; }
 
@@ -200,9 +203,12 @@
             font-weight: 400;
             letter-spacing: 0.08em;
             color: var(--ink);
-            transition: color 0.3s;
+            transition: color 0.3s, transform 0.3s;
         }
-        .mobile-menu a:hover { color: var(--terracotta); }
+        .mobile-menu a:hover { 
+            color: var(--terracotta); 
+            transform: scale(1.05);
+        }
 
         @media (max-width: 960px) {
             .nav-links { display: none; }
@@ -232,7 +238,13 @@
             height: 100%;
             object-fit: cover;
             object-position: center 20%;
-            filter: brightness(0.92);
+            filter: brightness(0.85);
+            /* New smooth continuous pan/zoom effect */
+            animation: slowPan 30s ease-in-out infinite alternate;
+        }
+        @keyframes slowPan {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.15); }
         }
         .hero-bg::after {
             content: '';
@@ -250,7 +262,7 @@
             position: relative;
             z-index: 2;
             text-align: center;
-            padding: 0 6% 5vh; /* Pushed down slightly */
+            padding: 0 6% 5vh; 
             max-width: 800px;
         }
         .hero-label {
@@ -267,7 +279,7 @@
         }
         .hero-title {
             font-family: var(--font-display);
-            font-size: clamp(1.7rem, 4vw, 2.6rem); /* Made smaller */
+            font-size: clamp(1.7rem, 4vw, 2.6rem); 
             font-weight: 300;
             line-height: 1.25;
             color: var(--white);
@@ -306,18 +318,23 @@
             background: var(--terracotta);
             color: var(--white);
             border: 1px solid var(--terracotta);
-            transition: all 0.4s var(--ease-out);
+            transition: all 0.5s var(--ease-out);
+            position: relative;
+            overflow: hidden;
+            border-radius: 40px;
         }
         .btn-primary:hover {
             background: transparent;
             color: var(--white);
             border-color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
         .btn-primary svg {
             width: 14px; height: 14px;
             transition: transform 0.3s var(--ease-out);
         }
-        .btn-primary:hover svg { transform: translateX(4px); }
+        .btn-primary:hover svg { transform: translateX(5px); }
 
         .btn-ghost {
             display: inline-flex;
@@ -330,11 +347,13 @@
             text-transform: uppercase;
             color: rgba(254, 253, 251, 0.7);
             border: 1px solid rgba(254, 253, 251, 0.25);
-            transition: all 0.4s var(--ease-out);
+            transition: all 0.5s var(--ease-out);
+            border-radius: 40px;
         }
         .btn-ghost:hover {
             border-color: var(--blush);
             color: var(--blush);
+            transform: translateY(-3px);
         }
 
         .hero-scroll {
@@ -366,7 +385,7 @@
         }
 
         @keyframes heroFadeUp {
-            from { opacity: 0; transform: translateY(28px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
         @keyframes scrollLine {
@@ -385,6 +404,7 @@
         ═══════════════════════════════════════════ */
         .about {
             background: var(--white);
+            position: relative;
         }
         .about-grid {
             max-width: 1300px;
@@ -400,16 +420,18 @@
         .about-image-wrap::before {
             content: '';
             position: absolute;
-            top: -16px;
-            left: -16px;
+            top: -20px;
+            left: -20px;
             width: 100%;
             height: 100%;
             border: 1px solid var(--blush);
             z-index: 0;
-            transition: transform 0.6s var(--ease-out);
+            transition: all 0.8s var(--ease-out);
+            border-radius: 8px;
         }
         .about-image-wrap:hover::before {
-            transform: translate(-4px, -4px);
+            transform: translate(-10px, -10px);
+            border-color: var(--terracotta);
         }
         .about-image {
             position: relative;
@@ -417,15 +439,16 @@
             width: 100%;
             aspect-ratio: 3/4;
             object-fit: cover;
+            border-radius: 8px;
             filter: grayscale(10%) brightness(0.97);
             box-shadow: 0 30px 80px -20px rgba(0,0,0,0.15);
-            transition: filter 0.6s, box-shadow 0.6s;
+            transition: filter 0.8s, box-shadow 0.8s, transform 0.8s var(--ease-out);
         }
         .about-image-wrap:hover .about-image {
             filter: grayscale(0%) brightness(1);
-            box-shadow: 0 40px 100px -20px rgba(0,0,0,0.2);
+            box-shadow: 0 40px 100px -20px rgba(195,122,103,0.3);
+            transform: scale(1.02);
         }
-        .about-content {}
         .section-eyebrow {
             font-family: var(--font-body);
             font-size: 0.65rem;
@@ -462,6 +485,17 @@
             padding-left: 24px;
             margin: 32px 0;
             line-height: 1.7;
+            position: relative;
+        }
+        .about-quote::before {
+            content: '"';
+            font-size: 4rem;
+            position: absolute;
+            top: -20px;
+            left: 10px;
+            color: var(--cream);
+            z-index: -1;
+            font-family: serif;
         }
 
         @media (max-width: 900px) {
@@ -498,9 +532,11 @@
             background: var(--white);
             padding: 48px 36px 40px;
             position: relative;
+            border-radius: 12px;
             overflow: hidden;
-            transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out);
-            border: 1px solid transparent;
+            transition: transform 0.6s var(--ease-out), box-shadow 0.6s var(--ease-out), border-color 0.6s;
+            border: 1px solid rgba(222, 194, 175, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
         }
         .service-card::before {
             content: '';
@@ -508,32 +544,39 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 3px;
-            background: var(--terracotta);
+            height: 4px;
+            background: linear-gradient(90deg, var(--terracotta), var(--blush));
             transform: scaleX(0);
             transform-origin: left;
-            transition: transform 0.5s var(--ease-out);
+            transition: transform 0.6s var(--ease-out);
         }
         .service-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 24px 64px -16px rgba(0,0,0,0.1);
-            border-color: rgba(195, 122, 103, 0.12);
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 30px 60px -16px rgba(195,122,103,0.15);
+            border-color: rgba(195, 122, 103, 0.15);
         }
         .service-card:hover::before { transform: scaleX(1); }
 
         .service-icon {
-            width: 48px;
-            height: 48px;
+            width: 56px;
+            height: 56px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 28px;
+            background: var(--cream);
+            border-radius: 50%;
+            transition: transform 0.5s var(--ease-out), background 0.5s;
+        }
+        .service-card:hover .service-icon {
+            transform: rotate(-10deg) scale(1.1);
+            background: rgba(195,122,103,0.1);
         }
         .service-icon svg {
-            width: 32px; height: 32px;
+            width: 28px; height: 28px;
             stroke: var(--terracotta);
             fill: none;
-            stroke-width: 1.2;
+            stroke-width: 1.5;
         }
         .service-card h3 {
             font-family: var(--font-display);
@@ -557,10 +600,16 @@
         .service-tag {
             font-size: 0.65rem;
             letter-spacing: 0.08em;
-            padding: 5px 12px;
+            padding: 6px 14px;
             background: var(--cream);
             color: var(--forest);
             font-weight: 400;
+            border-radius: 20px;
+            transition: background 0.3s, color 0.3s;
+        }
+        .service-card:hover .service-tag {
+            background: var(--blush);
+            color: var(--ink);
         }
 
         @media (max-width: 960px) {
@@ -584,8 +633,13 @@
             width: 600px;
             height: 600px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(195,122,103,0.06) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(195,122,103,0.08) 0%, transparent 70%);
             pointer-events: none;
+            animation: pulseBg 10s infinite alternate ease-in-out;
+        }
+        @keyframes pulseBg {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.2); opacity: 1; }
         }
         .credentials-header {
             text-align: center;
@@ -605,12 +659,17 @@
         .credential-card {
             padding: 44px 40px;
             border: 1px solid rgba(222, 194, 175, 0.1);
-            transition: border-color 0.5s, background 0.5s;
+            border-radius: 12px;
+            transition: all 0.5s var(--ease-out);
             position: relative;
+            background: rgba(255,255,255,0.01);
+            overflow: hidden;
         }
         .credential-card:hover {
-            border-color: rgba(222, 194, 175, 0.25);
-            background: rgba(222, 194, 175, 0.03);
+            border-color: rgba(222, 194, 175, 0.3);
+            background: rgba(222, 194, 175, 0.05);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
         .credential-number {
             font-family: var(--font-display);
@@ -620,6 +679,11 @@
             opacity: 0.4;
             line-height: 1;
             margin-bottom: 16px;
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        .credential-card:hover .credential-number {
+            opacity: 0.8;
+            transform: translateX(10px);
         }
         .credential-card h3 {
             font-family: var(--font-display);
@@ -639,50 +703,158 @@
         }
 
         /* ═══════════════════════════════════════════
-           SPACE / GALLERY
+           APPROACH / JOURNEY
+        ═══════════════════════════════════════════ */
+        .approach {
+            background: var(--white);
+            position: relative;
+        }
+        .approach-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 72px;
+        }
+        .approach-steps {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .approach-steps::before {
+            content: '';
+            position: absolute;
+            left: 23px;
+            top: 0;
+            bottom: 0;
+            width: 2px; /* Made slightly thicker */
+            background: linear-gradient(to bottom, var(--blush), transparent);
+            opacity: 0.6;
+        }
+        .approach-step {
+            display: flex;
+            gap: 40px;
+            padding-bottom: 56px;
+            position: relative;
+            transition: transform 0.5s;
+        }
+        .approach-step:hover {
+            transform: translateX(10px);
+        }
+        .approach-step:last-child { padding-bottom: 0; }
+        .approach-step-num {
+            flex-shrink: 0;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--cream);
+            border: 2px solid var(--blush);
+            border-radius: 50%;
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: var(--terracotta);
+            z-index: 1;
+            transition: all 0.4s var(--ease-out);
+        }
+        .approach-step:hover .approach-step-num {
+            background: var(--terracotta);
+            color: var(--white);
+            border-color: var(--terracotta);
+            transform: scale(1.1);
+        }
+        .approach-step h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: var(--ink);
+            margin-bottom: 8px;
+        }
+        .approach-step p {
+            font-size: 0.85rem;
+            color: var(--deep);
+            line-height: 1.8;
+        }
+
+        @media (max-width: 600px) {
+            .approach-step { gap: 24px; }
+            .approach-steps::before { left: 23px; }
+        }
+
+        /* ═══════════════════════════════════════════
+           SPACE / GALLERY (Grid Implementation)
         ═══════════════════════════════════════════ */
         .space {
-            background: var(--white);
+            background: var(--cream);
         }
         .space-header {
             text-align: center;
             max-width: 600px;
             margin: 0 auto 60px;
         }
+        
         .gallery-container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-auto-rows: 280px;
+            gap: 24px;
         }
         .gallery-item {
-            margin-bottom: 28px;
+            position: relative;
             cursor: pointer;
             overflow: hidden;
-            position: relative;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
         .gallery-item img {
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: cover;
             display: block;
-            transition: transform 0.7s var(--ease-out), filter 0.5s;
-            filter: brightness(0.96);
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s;
+            filter: brightness(0.95);
+        }
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(42, 44, 40, 0.6) 0%, transparent 50%);
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.5s ease;
         }
         .gallery-item:hover img {
-            transform: scale(1.02);
-            filter: brightness(1);
+            transform: scale(1.08);
+            filter: brightness(1.05);
+        }
+        .gallery-item:hover::before {
+            opacity: 1;
         }
         .gallery-item::after {
             content: 'Προβολή';
             position: absolute;
-            bottom: 16px;
-            right: 20px;
+            bottom: 20px;
+            right: 24px;
             font-size: 0.65rem;
             letter-spacing: 0.2em;
             text-transform: uppercase;
             color: var(--white);
+            z-index: 2;
             opacity: 0;
-            transition: opacity 0.4s;
+            transform: translateY(10px);
+            transition: opacity 0.4s, transform 0.4s var(--ease-out);
         }
-        .gallery-item:hover::after { opacity: 0.7; }
+        .gallery-item:hover::after { 
+            opacity: 1; 
+            transform: translateY(0);
+        }
+
+        /* Make the first image a bit wider if on desktop for visual interest */
+        @media (min-width: 768px) {
+            .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+        }
 
         /* Lightbox */
         .lightbox {
@@ -696,6 +868,7 @@
             padding: 40px;
             cursor: pointer;
             animation: lbFade 0.3s ease;
+            backdrop-filter: blur(5px);
         }
         .lightbox.active { display: flex; }
         .lightbox img {
@@ -703,6 +876,9 @@
             max-height: 85vh;
             object-fit: contain;
             box-shadow: 0 20px 80px rgba(0,0,0,0.5);
+            border-radius: 8px;
+            transform: scale(0.95);
+            animation: lbImgPop 0.4s var(--ease-out) forwards;
         }
         .lightbox-close {
             position: absolute;
@@ -714,22 +890,27 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            transition: transform 0.3s;
         }
+        .lightbox-close:hover { transform: scale(1.1) rotate(90deg); }
         .lightbox-close svg {
             stroke: var(--cream);
-            width: 24px;
-            height: 24px;
+            width: 28px;
+            height: 28px;
         }
         @keyframes lbFade {
             from { opacity: 0; }
             to { opacity: 1; }
+        }
+        @keyframes lbImgPop {
+            to { transform: scale(1); }
         }
 
         /* ═══════════════════════════════════════════
            REVIEWS / TESTIMONIALS
         ═══════════════════════════════════════════ */
         .reviews {
-            background: var(--cream);
+            background: var(--white);
         }
         .reviews-header {
             text-align: center;
@@ -752,12 +933,17 @@
 
         .review-card {
             flex: 0 0 380px;
-            background: var(--white);
+            background: var(--cream);
             padding: 36px 32px 32px;
+            border-radius: 12px;
             border: 1px solid rgba(222,194,175,0.15);
-            transition: border-color 0.4s;
+            transition: all 0.4s var(--ease-out);
         }
-        .review-card:hover { border-color: rgba(195,122,103,0.25); }
+        .review-card:hover { 
+            border-color: rgba(195,122,103,0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+        }
         .review-top {
             display: flex;
             align-items: center;
@@ -824,9 +1010,12 @@
             color: var(--terracotta);
             border-bottom: 1px solid transparent;
             padding-bottom: 2px;
-            transition: border-color 0.3s;
+            transition: all 0.3s;
         }
-        .reviews-cta a:hover { border-color: var(--terracotta); }
+        .reviews-cta a:hover { 
+            border-color: var(--terracotta); 
+            transform: scale(1.05);
+        }
         .reviews-cta img {
             height: 16px;
             display: inline-block;
@@ -868,15 +1057,20 @@
             font-weight: 400;
             letter-spacing: 0.2em;
             text-transform: uppercase;
+            border-radius: 40px;
             transition: all 0.4s var(--ease-out);
         }
         .contact-btn:hover {
             background: var(--blush);
             color: var(--ink);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(195,122,103,0.3);
         }
         .contact-btn svg {
             width: 16px; height: 16px;
+            transition: transform 0.3s var(--ease-out);
         }
+        .contact-btn:hover svg { transform: translateX(4px); }
 
         .contact-info {}
         .contact-info-label {
@@ -891,7 +1085,9 @@
             gap: 14px;
             align-items: flex-start;
             margin-bottom: 20px;
+            transition: transform 0.3s;
         }
+        .contact-item:hover { transform: translateX(8px); }
         .contact-item svg {
             width: 18px;
             height: 18px;
@@ -939,12 +1135,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            border-radius: 50%;
             border: 1px solid rgba(222, 194, 175, 0.15);
-            transition: all 0.3s var(--ease-out);
+            transition: all 0.4s var(--ease-out);
         }
         .contact-socials a:hover {
             border-color: var(--terracotta);
-            background: rgba(195, 122, 103, 0.08);
+            background: rgba(195, 122, 103, 0.15);
+            transform: translateY(-4px);
         }
         .contact-socials svg {
             width: 16px;
@@ -991,73 +1189,6 @@
         .footer-credit a:hover { color: var(--blush); }
 
         /* ═══════════════════════════════════════════
-           APPROACH / JOURNEY
-        ═══════════════════════════════════════════ */
-        .approach {
-            background: var(--white);
-            position: relative;
-        }
-        .approach-header {
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto 72px;
-        }
-        .approach-steps {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-        }
-        .approach-steps::before {
-            content: '';
-            position: absolute;
-            left: 23px;
-            top: 0;
-            bottom: 0;
-            width: 1px;
-            background: var(--blush);
-            opacity: 0.4;
-        }
-        .approach-step {
-            display: flex;
-            gap: 40px;
-            padding-bottom: 56px;
-            position: relative;
-        }
-        .approach-step:last-child { padding-bottom: 0; }
-        .approach-step-num {
-            flex-shrink: 0;
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--cream);
-            border: 1px solid var(--blush);
-            font-family: var(--font-display);
-            font-size: 1.1rem;
-            font-weight: 400;
-            color: var(--terracotta);
-            z-index: 1;
-        }
-        .approach-step h3 {
-            font-family: var(--font-display);
-            font-size: 1.2rem;
-            font-weight: 400;
-            color: var(--ink);
-            margin-bottom: 8px;
-        }
-        .approach-step p {
-            font-size: 0.85rem;
-            color: var(--deep);
-            line-height: 1.8;
-        }
-
-        @media (max-width: 600px) {
-            .approach-step { gap: 24px; }
-            .approach-steps::before { left: 23px; }
-        }
-
-        /* ═══════════════════════════════════════════
            DIVIDER LINE
         ═══════════════════════════════════════════ */
         .divider {
@@ -1075,6 +1206,7 @@
             .service-card { padding: 36px 28px 32px; }
             .credential-card { padding: 32px 28px; }
             .btn-primary, .btn-ghost { padding: 12px 24px; font-size: 0.65rem; }
+            .gallery-container { grid-auto-rows: 220px; }
         }
     </style>
 </head>
@@ -1112,7 +1244,7 @@
 
     <section class="hero" id="hero">
         <div class="hero-bg">
-            <img src="https://raw.githubusercontent.com/agelmet/KAZANI/refs/heads/main/KAZANI2.jpeg" alt="Αδαμαντία Καζάνη — Ψυχολόγος">
+            <img src="https://github.com/agelmet/KAZANI/blob/main/2026-01-11.jpg?raw=true" alt="Αδαμαντία Καζάνη — Ψυχολόγος">
         </div>
 
         <div class="hero-content">
@@ -1136,7 +1268,7 @@
     <section class="about section-padding" id="about">
         <div class="about-grid">
             <div class="about-image-wrap reveal">
-                <img src="https://raw.githubusercontent.com/agelmet/KAZANI/refs/heads/main/KAZANI3.jpeg" alt="Αδαμαντία Καζάνη" class="about-image">
+                <img src="https://raw.githubusercontent.com/agelmet/KAZANI/refs/heads/main/2026-01-11-6.jpg" alt="Αδαμαντία Καζάνη" class="about-image">
             </div>
             <div class="about-content">
                 <span class="section-eyebrow reveal">Αδαμαντία Καζάνη &middot; BA, MSc</span>
@@ -1278,7 +1410,25 @@
 
         <div class="gallery-container">
             <div class="gallery-item reveal" onclick="openLightbox(this)">
-                <img src="https://raw.githubusercontent.com/agelmet/KAZANI/refs/heads/main/KAZANI1.jpeg" alt="Χώρος γραφείου">
+                <img src="https://raw.githubusercontent.com/agelmet/KAZANI/refs/heads/main/2026-01-11-9.jpg" alt="Χώρος γραφείου">
+            </div>
+            <div class="gallery-item reveal reveal-delay-1" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/agelmet/KAZANI/refs/heads/main/2026-01-11-8.jpg" alt="Χώρος γραφείου">
+            </div>
+            <div class="gallery-item reveal reveal-delay-2" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/agelmet/KAZANI/refs/heads/main/2026-01-11-7.jpg" alt="Χώρος γραφείου">
+            </div>
+            <div class="gallery-item reveal reveal-delay-3" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/agelmet/KAZANI/refs/heads/main/2026-01-11-5.jpg" alt="Χώρος γραφείου">
+            </div>
+            <div class="gallery-item reveal" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/agelmet/KAZANI/refs/heads/main/2026-01-11-4.jpg" alt="Χώρος γραφείου">
+            </div>
+            <div class="gallery-item reveal reveal-delay-1" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/agelmet/KAZANI/refs/heads/main/2026-01-11-3.jpg" alt="Χώρος γραφείου">
+            </div>
+            <div class="gallery-item reveal reveal-delay-2" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/agelmet/KAZANI/refs/heads/main/2026-01-11-2.jpg" alt="Χώρος γραφείου">
             </div>
         </div>
     </section>
