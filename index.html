@@ -237,7 +237,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: top center; /* Anchors the image to the top so her face is visible */
+            object-position: 55% 20%; /* Pushed right and further down */
             filter: brightness(0.85);
             animation: slowPan 30s ease-in-out infinite alternate;
         }
@@ -394,7 +394,7 @@
 
         @media (max-width: 768px) {
             .hero { min-height: 100svh; }
-            .hero-bg img { object-position: top center; }
+            .hero-bg img { object-position: 55% 15%; }
             .hero-content { padding-bottom: 14vh; }
         }
 
@@ -967,21 +967,11 @@
             color: var(--sage);
         }
         
-        /* Fallback stylized logo so it never breaks */
         .review-doctoranytime {
-            display: flex;
-            align-items: center;
-            font-family: Arial, sans-serif;
-            font-size: 0.9rem;
-            letter-spacing: -0.3px;
-            opacity: 0.8;
-            user-select: none;
+            height: 24px;
+            width: auto;
+            border-radius: 3px;
         }
-        .review-doctoranytime svg {
-            margin-right: 4px;
-        }
-        .doc-text { color: #2b4d70; font-weight: 700; }
-        .any-text { color: #00c3b3; font-weight: 700; }
 
         .review-text {
             font-family: var(--font-display);
@@ -1489,10 +1479,7 @@
                 <div class="review-card">
                     <div class="review-top">
                         <div class="review-score">10.0 <span>/ 10</span></div>
-                        <div class="review-doctoranytime">
-                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#00c3b3" d="M19 10.5h-5.5V5a1.5 1.5 0 00-3 0v5.5H5a1.5 1.5 0 000 3h5.5V19a1.5 1.5 0 003 0v-5.5H19a1.5 1.5 0 000-3z"/></svg>
-                            <span class="doc-text">doctor</span><span class="any-text">anytime</span>
-                        </div>
+                        <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="doctoranytime" class="review-doctoranytime">
                     </div>
                     <p class="review-text">Χρειάστηκα βοήθεια σε μια κρίσιμη καμπή της ζωής μου. Ήταν η πρώτη που ένιωσα άνετα από την πρώτη στιγμή και κατάφερα να νιώσω κατανόηση και ασφάλεια.</p>
                     <div class="review-meta">
@@ -1504,10 +1491,7 @@
                 <div class="review-card">
                     <div class="review-top">
                         <div class="review-score">10.0 <span>/ 10</span></div>
-                        <div class="review-doctoranytime">
-                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#00c3b3" d="M19 10.5h-5.5V5a1.5 1.5 0 00-3 0v5.5H5a1.5 1.5 0 000 3h5.5V19a1.5 1.5 0 003 0v-5.5H19a1.5 1.5 0 000-3z"/></svg>
-                            <span class="doc-text">doctor</span><span class="any-text">anytime</span>
-                        </div>
+                        <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="doctoranytime" class="review-doctoranytime">
                     </div>
                     <p class="review-text">Η Αδαμαντία είναι μια εξαιρετική ψυχολόγος που πραγματικά πιάνει τα νοήματα της ψυχής σου. Αξίζει να κάνει κάποιος εποικοδομητική συζήτηση μαζί της.</p>
                     <div class="review-meta">
@@ -1519,10 +1503,7 @@
                 <div class="review-card">
                     <div class="review-top">
                         <div class="review-score">10.0 <span>/ 10</span></div>
-                        <div class="review-doctoranytime">
-                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#00c3b3" d="M19 10.5h-5.5V5a1.5 1.5 0 00-3 0v5.5H5a1.5 1.5 0 000 3h5.5V19a1.5 1.5 0 003 0v-5.5H19a1.5 1.5 0 000-3z"/></svg>
-                            <span class="doc-text">doctor</span><span class="any-text">anytime</span>
-                        </div>
+                        <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="doctoranytime" class="review-doctoranytime">
                     </div>
                     <p class="review-text">Εξαιρετική επαγγελματίας. Πολύ υποστηρικτική και προσιτή, με έκανε να νιώσω άνετα.</p>
                     <div class="review-meta">
@@ -1534,10 +1515,7 @@
                 <div class="review-card">
                     <div class="review-top">
                         <div class="review-score">9.8 <span>/ 10</span></div>
-                        <div class="review-doctoranytime">
-                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#00c3b3" d="M19 10.5h-5.5V5a1.5 1.5 0 00-3 0v5.5H5a1.5 1.5 0 000 3h5.5V19a1.5 1.5 0 003 0v-5.5H19a1.5 1.5 0 000-3z"/></svg>
-                            <span class="doc-text">doctor</span><span class="any-text">anytime</span>
-                        </div>
+                        <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="doctoranytime" class="review-doctoranytime">
                     </div>
                     <p class="review-text">Ταιριάξαμε από την πρώτη στιγμή. Με έχει βοηθήσει να δω πράγματα για μένα που δεν είχα αντιληφθεί ως τώρα. Γίνεται ουσιαστική δουλειά. Τη συνιστώ ανεπιφύλακτα.</p>
                     <div class="review-meta">
@@ -1549,10 +1527,7 @@
                 <div class="review-card">
                     <div class="review-top">
                         <div class="review-score">10.0 <span>/ 10</span></div>
-                        <div class="review-doctoranytime">
-                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#00c3b3" d="M19 10.5h-5.5V5a1.5 1.5 0 00-3 0v5.5H5a1.5 1.5 0 000 3h5.5V19a1.5 1.5 0 003 0v-5.5H19a1.5 1.5 0 000-3z"/></svg>
-                            <span class="doc-text">doctor</span><span class="any-text">anytime</span>
-                        </div>
+                        <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="doctoranytime" class="review-doctoranytime">
                     </div>
                     <p class="review-text">Από την πρώτη συνεδρία ένιωσα ασφάλεια και κατανόηση. Η δουλειά που κάνουμε με βοηθάει να είμαι πιο ήρεμη και να καταλαβαίνω καλύτερα τον εαυτό μου.</p>
                     <div class="review-meta">
@@ -1564,10 +1539,7 @@
                 <div class="review-card">
                     <div class="review-top">
                         <div class="review-score">10.0 <span>/ 10</span></div>
-                        <div class="review-doctoranytime">
-                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#00c3b3" d="M19 10.5h-5.5V5a1.5 1.5 0 00-3 0v5.5H5a1.5 1.5 0 000 3h5.5V19a1.5 1.5 0 003 0v-5.5H19a1.5 1.5 0 000-3z"/></svg>
-                            <span class="doc-text">doctor</span><span class="any-text">anytime</span>
-                        </div>
+                        <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="doctoranytime" class="review-doctoranytime">
                     </div>
                     <p class="review-text">Φοβερή επαγγελματίας. Εμπνέει ασφάλεια, είναι κατανοητική και πραγματικά βοηθητική. Τη συστήνω ανεπιφύλακτα.</p>
                     <div class="review-meta">
@@ -1579,10 +1551,7 @@
                 <div class="review-card">
                     <div class="review-top">
                         <div class="review-score">10.0 <span>/ 10</span></div>
-                        <div class="review-doctoranytime">
-                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#00c3b3" d="M19 10.5h-5.5V5a1.5 1.5 0 00-3 0v5.5H5a1.5 1.5 0 000 3h5.5V19a1.5 1.5 0 003 0v-5.5H19a1.5 1.5 0 000-3z"/></svg>
-                            <span class="doc-text">doctor</span><span class="any-text">anytime</span>
-                        </div>
+                        <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="doctoranytime" class="review-doctoranytime">
                     </div>
                     <p class="review-text">Είναι μια ήρεμη παρουσία που σου εμπνέει εμπιστοσύνη να ανοιχτείς. Πάντα με χαμόγελο, ακόμα και στα πιο δύσκολα κομμάτια, είναι εκεί να σε συμβουλέψει.</p>
                     <div class="review-meta">
@@ -1594,10 +1563,7 @@
                 <div class="review-card">
                     <div class="review-top">
                         <div class="review-score">10.0 <span>/ 10</span></div>
-                        <div class="review-doctoranytime">
-                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#00c3b3" d="M19 10.5h-5.5V5a1.5 1.5 0 00-3 0v5.5H5a1.5 1.5 0 000 3h5.5V19a1.5 1.5 0 003 0v-5.5H19a1.5 1.5 0 000-3z"/></svg>
-                            <span class="doc-text">doctor</span><span class="any-text">anytime</span>
-                        </div>
+                        <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="doctoranytime" class="review-doctoranytime">
                     </div>
                     <p class="review-text">Την Αδαμαντία Καζάνη τη συνιστώ ανεπιφύλακτα. Αξιόπιστη, σοβαρή επαγγελματίας, με συνέπεια και σεβασμό. Μια ασφαλή, έγκυρη επιλογή.</p>
                     <div class="review-meta">
@@ -1615,9 +1581,7 @@
         <div class="reviews-cta reveal">
             <a href="https://www.doctoranytime.gr/d/Psychologos/kazani-adamantia-k" target="_blank" rel="noopener">
                 Περισσότερα στο 
-                <div class="review-doctoranytime" style="margin-left: 6px;">
-                    <span class="doc-text">doctor</span><span class="any-text">anytime</span>
-                </div>
+                <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="doctoranytime" style="height: 16px; width: auto; margin-left: 8px; border-radius: 2px;">
             </a>
         </div>
     </section>
@@ -1648,7 +1612,7 @@
                 </div>
 
                 <div class="contact-item reveal reveal-delay-2">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 0"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                    <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="doctoranytime" style="height: 18px; width: auto; object-fit: contain; flex-shrink: 0; margin-top: 2px; border-radius: 2px;">
                     <div class="contact-item-text"><a href="https://www.doctoranytime.gr/d/Psychologos/kazani-adamantia-k" target="_blank" rel="noopener">doctoranytime.gr</a></div>
                 </div>
 
@@ -1665,7 +1629,7 @@
                         <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                     </a>
                     <a href="https://www.doctoranytime.gr/d/Psychologos/kazani-adamantia-k" target="_blank" rel="noopener" aria-label="Doctoranytime">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--blush)" stroke-width="1.5"><path d="M12 2a10 10 0 0110 10c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2z"/><path d="M8 12h8M12 8v8" stroke-linecap="round"/></svg>
+                        <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="doctoranytime" style="height: 16px; width: auto; border-radius: 2px;">
                     </a>
                 </div>
             </div>
