@@ -20,7 +20,7 @@
             --forest: #747c70;
             --deep: #3a3d38;
             --ink: #2a2c28;
-            --white: #fefdfb;
+            --white: #ffffff;
 
             --font-display: 'Cormorant Garamond', Georgia, serif;
             --font-body: 'Outfit', sans-serif;
@@ -88,14 +88,12 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            transition: background 0.5s, backdrop-filter 0.5s, box-shadow 0.5s;
+            background: #ffffff;
+            transition: box-shadow 0.5s;
             padding: 0 5%;
         }
         .nav.scrolled {
-            background: rgba(247, 243, 232, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 1px 0 rgba(116, 124, 112, 0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
         .nav-inner {
             max-width: 1400px;
@@ -252,7 +250,7 @@
             position: relative;
             z-index: 2;
             text-align: center;
-            padding: 0 6% 10vh;
+            padding: 0 6% 5vh; /* Pushed down slightly */
             max-width: 800px;
         }
         .hero-label {
@@ -269,7 +267,7 @@
         }
         .hero-title {
             font-family: var(--font-display);
-            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-size: clamp(1.7rem, 4vw, 2.6rem); /* Made smaller */
             font-weight: 300;
             line-height: 1.25;
             color: var(--white);
@@ -1085,7 +1083,7 @@
     <nav class="nav" id="nav">
         <div class="nav-inner">
             <a href="#hero">
-                <img src="https://raw.githubusercontent.com/agelmet/KAZANI/main/logogoskaz.jpg" alt="Αδαμαντία Καζάνη" class="nav-logo">
+                <img src="https://raw.githubusercontent.com/agelmet/KAZANI/main/logogoskaz.jpg" alt="" class="nav-logo">
             </a>
             <ul class="nav-links">
                 <li><a href="#about">Η Ψυχολογος</a></li>
@@ -1114,7 +1112,7 @@
 
     <section class="hero" id="hero">
         <div class="hero-bg">
-            <img src="https://raw.githubusercontent.com/agelmet/KAZANI/main/%CE%9A%CE%B1%CE%B6%CE%AC%CE%BD%CE%B7_%CE%91%CE%B4%CE%B1%CE%BC%CE%B1%CE%BD%CF%84%CE%AF%CE%B1_Prv_4.jpeg" alt="Αδαμαντία Καζάνη — Ψυχολόγος">
+            <img src="https://raw.githubusercontent.com/agelmet/KAZANI/refs/heads/main/KAZANI2.jpeg" alt="Αδαμαντία Καζάνη — Ψυχολόγος">
         </div>
 
         <div class="hero-content">
@@ -1138,7 +1136,7 @@
     <section class="about section-padding" id="about">
         <div class="about-grid">
             <div class="about-image-wrap reveal">
-                <img src="https://raw.githubusercontent.com/agelmet/KAZANI/main/%CE%9A%CE%B1%CE%B6%CE%AC%CE%BD%CE%B7_%CE%91%CE%B4%CE%B1%CE%BC%CE%B1%CE%BD%CF%84%CE%AF%CE%B1_Prv_7.jpeg" alt="Αδαμαντία Καζάνη" class="about-image">
+                <img src="https://raw.githubusercontent.com/agelmet/KAZANI/refs/heads/main/KAZANI3.jpeg" alt="Αδαμαντία Καζάνη" class="about-image">
             </div>
             <div class="about-content">
                 <span class="section-eyebrow reveal">Αδαμαντία Καζάνη &middot; BA, MSc</span>
@@ -1280,7 +1278,7 @@
 
         <div class="gallery-container">
             <div class="gallery-item reveal" onclick="openLightbox(this)">
-                <img src="https://raw.githubusercontent.com/agelmet/KAZANI/main/%CE%9A%CE%B1%CE%B6%CE%AC%CE%BD%CE%B7_%CE%91%CE%B4%CE%B1%CE%BC%CE%B1%CE%BD%CF%84%CE%AF%CE%B1_Prv_3.jpeg" alt="Χώρος γραφείου">
+                <img src="https://raw.githubusercontent.com/agelmet/KAZANI/refs/heads/main/KAZANI1.jpeg" alt="Χώρος γραφείου">
             </div>
         </div>
     </section>
