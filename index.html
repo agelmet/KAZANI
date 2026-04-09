@@ -150,7 +150,7 @@
             padding: 10px 24px !important;
             border: 1px solid var(--terracotta);
             color: var(--terracotta) !important;
-            border-radius: 40px; /* softer look */
+            border-radius: 40px; 
             transition: all 0.4s var(--ease-out) !important;
         }
         .nav-cta:hover {
@@ -237,9 +237,8 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center 20%;
+            object-position: top center; /* Anchors the image to the top so her face is visible */
             filter: brightness(0.85);
-            /* New smooth continuous pan/zoom effect */
             animation: slowPan 30s ease-in-out infinite alternate;
         }
         @keyframes slowPan {
@@ -395,7 +394,7 @@
 
         @media (max-width: 768px) {
             .hero { min-height: 100svh; }
-            .hero-bg img { object-position: center 15%; }
+            .hero-bg img { object-position: top center; }
             .hero-content { padding-bottom: 14vh; }
         }
 
@@ -725,7 +724,7 @@
             left: 23px;
             top: 0;
             bottom: 0;
-            width: 2px; /* Made slightly thicker */
+            width: 2px; 
             background: linear-gradient(to bottom, var(--blush), transparent);
             opacity: 0.6;
         }
@@ -907,29 +906,35 @@
         }
 
         /* ═══════════════════════════════════════════
-           REVIEWS / TESTIMONIALS
+           REVIEWS / TESTIMONIALS (Slider update)
         ═══════════════════════════════════════════ */
         .reviews {
             background: var(--white);
+            position: relative;
         }
         .reviews-header {
             text-align: center;
             max-width: 600px;
-            margin: 0 auto 60px;
+            margin: 0 auto 50px;
         }
-        .reviews-track-wrap {
+        .reviews-slider-container {
             position: relative;
-            overflow: hidden;
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
+            display: flex;
+            align-items: center;
         }
         .reviews-track {
             display: flex;
             gap: 24px;
-            animation: reviewsScroll 45s linear infinite;
-            width: max-content;
+            overflow-x: auto;
+            padding: 20px; /* space for card hover shadow */
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
         }
-        .reviews-track:hover { animation-play-state: paused; }
+        .reviews-track::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for Chrome, Safari and Opera */
+        }
 
         .review-card {
             flex: 0 0 380px;
@@ -961,11 +966,23 @@
             font-weight: 300;
             color: var(--sage);
         }
+        
+        /* Fallback stylized logo so it never breaks */
         .review-doctoranytime {
-            height: 20px;
-            width: auto;
-            opacity: 0.5;
+            display: flex;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: -0.3px;
+            opacity: 0.8;
+            user-select: none;
         }
+        .review-doctoranytime svg {
+            margin-right: 4px;
+        }
+        .doc-text { color: #2b4d70; font-weight: 700; }
+        .any-text { color: #00c3b3; font-weight: 700; }
+
         .review-text {
             font-family: var(--font-display);
             font-size: 0.95rem;
@@ -992,13 +1009,43 @@
             color: var(--sage);
         }
 
-        @keyframes reviewsScroll {
-            from { transform: translateX(0); }
-            to { transform: translateX(-50%); }
+        /* Review slider arrows */
+        .review-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            background: var(--white);
+            border: 1px solid var(--blush);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            color: var(--terracotta);
         }
+        .review-arrow:hover {
+            background: var(--terracotta);
+            color: var(--white);
+            border-color: var(--terracotta);
+            transform: translateY(-50%) scale(1.1);
+        }
+        .review-arrow svg {
+            width: 20px; height: 20px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+        .prev-arrow { left: -10px; }
+        .next-arrow { right: -10px; }
+
         .reviews-cta {
             text-align: center;
-            margin-top: 48px;
+            margin-top: 24px;
         }
         .reviews-cta a {
             display: inline-flex;
@@ -1015,10 +1062,6 @@
         .reviews-cta a:hover { 
             border-color: var(--terracotta); 
             transform: scale(1.05);
-        }
-        .reviews-cta img {
-            height: 16px;
-            display: inline-block;
         }
 
         /* ═══════════════════════════════════════════
@@ -1189,16 +1232,6 @@
         .footer-credit a:hover { color: var(--blush); }
 
         /* ═══════════════════════════════════════════
-           DIVIDER LINE
-        ═══════════════════════════════════════════ */
-        .divider {
-            width: 48px;
-            height: 1px;
-            background: var(--blush);
-            margin: 0 auto;
-        }
-
-        /* ═══════════════════════════════════════════
            RESPONSIVE FINE-TUNING
         ═══════════════════════════════════════════ */
         @media (max-width: 480px) {
@@ -1207,6 +1240,7 @@
             .credential-card { padding: 32px 28px; }
             .btn-primary, .btn-ghost { padding: 12px 24px; font-size: 0.65rem; }
             .gallery-container { grid-auto-rows: 220px; }
+            .prev-arrow, .next-arrow { display: none; /* remove arrows on mobile so users just swipe */ } 
         }
     </style>
 </head>
@@ -1446,12 +1480,19 @@
             <h2 class="section-title reveal reveal-delay-1">Εμπειρίες <em>Θεραπευόμενων</em></h2>
         </div>
 
-        <div class="reviews-track-wrap">
+        <div class="reviews-slider-container">
+            <button class="review-arrow prev-arrow" aria-label="Προηγούμενο" onclick="scrollReviews(-1)">
+                <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            
             <div class="reviews-track" id="reviewsTrack">
                 <div class="review-card">
                     <div class="review-top">
                         <div class="review-score">10.0 <span>/ 10</span></div>
-                        <img src="https://www.doctoranytime.gr/images/logo-rebranding.svg" alt="doctoranytime" class="review-doctoranytime">
+                        <div class="review-doctoranytime">
+                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#00c3b3" d="M19 10.5h-5.5V5a1.5 1.5 0 00-3 0v5.5H5a1.5 1.5 0 000 3h5.5V19a1.5 1.5 0 003 0v-5.5H19a1.5 1.5 0 000-3z"/></svg>
+                            <span class="doc-text">doctor</span><span class="any-text">anytime</span>
+                        </div>
                     </div>
                     <p class="review-text">Χρειάστηκα βοήθεια σε μια κρίσιμη καμπή της ζωής μου. Ήταν η πρώτη που ένιωσα άνετα από την πρώτη στιγμή και κατάφερα να νιώσω κατανόηση και ασφάλεια.</p>
                     <div class="review-meta">
@@ -1463,7 +1504,10 @@
                 <div class="review-card">
                     <div class="review-top">
                         <div class="review-score">10.0 <span>/ 10</span></div>
-                        <img src="https://www.doctoranytime.gr/images/logo-rebranding.svg" alt="doctoranytime" class="review-doctoranytime">
+                        <div class="review-doctoranytime">
+                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#00c3b3" d="M19 10.5h-5.5V5a1.5 1.5 0 00-3 0v5.5H5a1.5 1.5 0 000 3h5.5V19a1.5 1.5 0 003 0v-5.5H19a1.5 1.5 0 000-3z"/></svg>
+                            <span class="doc-text">doctor</span><span class="any-text">anytime</span>
+                        </div>
                     </div>
                     <p class="review-text">Η Αδαμαντία είναι μια εξαιρετική ψυχολόγος που πραγματικά πιάνει τα νοήματα της ψυχής σου. Αξίζει να κάνει κάποιος εποικοδομητική συζήτηση μαζί της.</p>
                     <div class="review-meta">
@@ -1475,7 +1519,10 @@
                 <div class="review-card">
                     <div class="review-top">
                         <div class="review-score">10.0 <span>/ 10</span></div>
-                        <img src="https://www.doctoranytime.gr/images/logo-rebranding.svg" alt="doctoranytime" class="review-doctoranytime">
+                        <div class="review-doctoranytime">
+                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#00c3b3" d="M19 10.5h-5.5V5a1.5 1.5 0 00-3 0v5.5H5a1.5 1.5 0 000 3h5.5V19a1.5 1.5 0 003 0v-5.5H19a1.5 1.5 0 000-3z"/></svg>
+                            <span class="doc-text">doctor</span><span class="any-text">anytime</span>
+                        </div>
                     </div>
                     <p class="review-text">Εξαιρετική επαγγελματίας. Πολύ υποστηρικτική και προσιτή, με έκανε να νιώσω άνετα.</p>
                     <div class="review-meta">
@@ -1487,7 +1534,10 @@
                 <div class="review-card">
                     <div class="review-top">
                         <div class="review-score">9.8 <span>/ 10</span></div>
-                        <img src="https://www.doctoranytime.gr/images/logo-rebranding.svg" alt="doctoranytime" class="review-doctoranytime">
+                        <div class="review-doctoranytime">
+                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#00c3b3" d="M19 10.5h-5.5V5a1.5 1.5 0 00-3 0v5.5H5a1.5 1.5 0 000 3h5.5V19a1.5 1.5 0 003 0v-5.5H19a1.5 1.5 0 000-3z"/></svg>
+                            <span class="doc-text">doctor</span><span class="any-text">anytime</span>
+                        </div>
                     </div>
                     <p class="review-text">Ταιριάξαμε από την πρώτη στιγμή. Με έχει βοηθήσει να δω πράγματα για μένα που δεν είχα αντιληφθεί ως τώρα. Γίνεται ουσιαστική δουλειά. Τη συνιστώ ανεπιφύλακτα.</p>
                     <div class="review-meta">
@@ -1499,7 +1549,10 @@
                 <div class="review-card">
                     <div class="review-top">
                         <div class="review-score">10.0 <span>/ 10</span></div>
-                        <img src="https://www.doctoranytime.gr/images/logo-rebranding.svg" alt="doctoranytime" class="review-doctoranytime">
+                        <div class="review-doctoranytime">
+                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#00c3b3" d="M19 10.5h-5.5V5a1.5 1.5 0 00-3 0v5.5H5a1.5 1.5 0 000 3h5.5V19a1.5 1.5 0 003 0v-5.5H19a1.5 1.5 0 000-3z"/></svg>
+                            <span class="doc-text">doctor</span><span class="any-text">anytime</span>
+                        </div>
                     </div>
                     <p class="review-text">Από την πρώτη συνεδρία ένιωσα ασφάλεια και κατανόηση. Η δουλειά που κάνουμε με βοηθάει να είμαι πιο ήρεμη και να καταλαβαίνω καλύτερα τον εαυτό μου.</p>
                     <div class="review-meta">
@@ -1511,7 +1564,10 @@
                 <div class="review-card">
                     <div class="review-top">
                         <div class="review-score">10.0 <span>/ 10</span></div>
-                        <img src="https://www.doctoranytime.gr/images/logo-rebranding.svg" alt="doctoranytime" class="review-doctoranytime">
+                        <div class="review-doctoranytime">
+                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#00c3b3" d="M19 10.5h-5.5V5a1.5 1.5 0 00-3 0v5.5H5a1.5 1.5 0 000 3h5.5V19a1.5 1.5 0 003 0v-5.5H19a1.5 1.5 0 000-3z"/></svg>
+                            <span class="doc-text">doctor</span><span class="any-text">anytime</span>
+                        </div>
                     </div>
                     <p class="review-text">Φοβερή επαγγελματίας. Εμπνέει ασφάλεια, είναι κατανοητική και πραγματικά βοηθητική. Τη συστήνω ανεπιφύλακτα.</p>
                     <div class="review-meta">
@@ -1523,7 +1579,10 @@
                 <div class="review-card">
                     <div class="review-top">
                         <div class="review-score">10.0 <span>/ 10</span></div>
-                        <img src="https://www.doctoranytime.gr/images/logo-rebranding.svg" alt="doctoranytime" class="review-doctoranytime">
+                        <div class="review-doctoranytime">
+                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#00c3b3" d="M19 10.5h-5.5V5a1.5 1.5 0 00-3 0v5.5H5a1.5 1.5 0 000 3h5.5V19a1.5 1.5 0 003 0v-5.5H19a1.5 1.5 0 000-3z"/></svg>
+                            <span class="doc-text">doctor</span><span class="any-text">anytime</span>
+                        </div>
                     </div>
                     <p class="review-text">Είναι μια ήρεμη παρουσία που σου εμπνέει εμπιστοσύνη να ανοιχτείς. Πάντα με χαμόγελο, ακόμα και στα πιο δύσκολα κομμάτια, είναι εκεί να σε συμβουλέψει.</p>
                     <div class="review-meta">
@@ -1535,7 +1594,10 @@
                 <div class="review-card">
                     <div class="review-top">
                         <div class="review-score">10.0 <span>/ 10</span></div>
-                        <img src="https://www.doctoranytime.gr/images/logo-rebranding.svg" alt="doctoranytime" class="review-doctoranytime">
+                        <div class="review-doctoranytime">
+                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#00c3b3" d="M19 10.5h-5.5V5a1.5 1.5 0 00-3 0v5.5H5a1.5 1.5 0 000 3h5.5V19a1.5 1.5 0 003 0v-5.5H19a1.5 1.5 0 000-3z"/></svg>
+                            <span class="doc-text">doctor</span><span class="any-text">anytime</span>
+                        </div>
                     </div>
                     <p class="review-text">Την Αδαμαντία Καζάνη τη συνιστώ ανεπιφύλακτα. Αξιόπιστη, σοβαρή επαγγελματίας, με συνέπεια και σεβασμό. Μια ασφαλή, έγκυρη επιλογή.</p>
                     <div class="review-meta">
@@ -1544,12 +1606,18 @@
                     </div>
                 </div>
             </div>
+            
+            <button class="review-arrow next-arrow" aria-label="Επόμενο" onclick="scrollReviews(1)">
+                <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
         </div>
 
         <div class="reviews-cta reveal">
             <a href="https://www.doctoranytime.gr/d/Psychologos/kazani-adamantia-k" target="_blank" rel="noopener">
                 Περισσότερα στο 
-                <img src="https://www.doctoranytime.gr/images/logo-rebranding.svg" alt="doctoranytime">
+                <div class="review-doctoranytime" style="margin-left: 6px;">
+                    <span class="doc-text">doctor</span><span class="any-text">anytime</span>
+                </div>
             </a>
         </div>
     </section>
@@ -1657,9 +1725,50 @@
             if (e.key === 'Escape') closeLightbox();
         });
 
-        // ── Duplicate reviews for infinite scroll ──
+        // ── Interactive Reviews Slider ──
         const track = document.getElementById('reviewsTrack');
-        track.innerHTML += track.innerHTML;
+        track.innerHTML += track.innerHTML; // Duplicate content for continuous loop
+
+        let isHovered = false;
+        let scrollPos = 0;
+
+        // Smooth continuous slow auto-scroll via JS
+        function smoothAutoScroll() {
+            if (!isHovered) {
+                scrollPos += 0.5; // Very slow speed
+                
+                // Reset scroll when we hit halfway (to loop perfectly)
+                if (scrollPos >= track.scrollWidth / 2) {
+                    scrollPos = 0;
+                }
+                track.scrollLeft = scrollPos;
+            } else {
+                // Sync internal tracker with manual scrolling
+                scrollPos = track.scrollLeft;
+            }
+            requestAnimationFrame(smoothAutoScroll);
+        }
+        requestAnimationFrame(smoothAutoScroll);
+
+        // Pause auto-scroll on hover / touch
+        const container = document.querySelector('.reviews-slider-container');
+        container.addEventListener('mouseenter', () => isHovered = true);
+        container.addEventListener('mouseleave', () => isHovered = false);
+        container.addEventListener('touchstart', () => isHovered = true, {passive: true});
+        container.addEventListener('touchend', () => setTimeout(() => isHovered = false, 2000), {passive: true});
+
+        // Manual Arrow scrolling
+        function scrollReviews(direction) {
+            isHovered = true; 
+            const scrollAmount = 404; // standard width + gap of one card
+            track.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+            
+            // Resume auto-scroll after the animation completes
+            setTimeout(() => {
+                scrollPos = track.scrollLeft;
+                isHovered = false;
+            }, 600);
+        }
     </script>
 
 </body>
