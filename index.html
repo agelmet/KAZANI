@@ -237,7 +237,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: 55% 20%; /* Pushed right and further down */
+            object-position: center; 
             filter: brightness(0.85);
             animation: slowPan 30s ease-in-out infinite alternate;
         }
@@ -394,7 +394,6 @@
 
         @media (max-width: 768px) {
             .hero { min-height: 100svh; }
-            .hero-bg img { object-position: 55% 15%; }
             .hero-content { padding-bottom: 14vh; }
         }
 
@@ -624,6 +623,24 @@
             position: relative;
             overflow: hidden;
         }
+        .credentials-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+        .credentials-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 55% 25%;
+            filter: grayscale(40%);
+        }
+        .credentials-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(42, 44, 40, 0.85); 
+        }
         .credentials::before {
             content: '';
             position: absolute;
@@ -632,9 +649,10 @@
             width: 600px;
             height: 600px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(195,122,103,0.08) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(195,122,103,0.12) 0%, transparent 70%);
             pointer-events: none;
             animation: pulseBg 10s infinite alternate ease-in-out;
+            z-index: 1;
         }
         @keyframes pulseBg {
             0% { transform: scale(1); opacity: 0.5; }
@@ -644,6 +662,8 @@
             text-align: center;
             max-width: 640px;
             margin: 0 auto 72px;
+            position: relative;
+            z-index: 2;
         }
         .credentials-header .section-eyebrow { color: var(--blush); }
         .credentials-header .section-title { color: var(--cream); }
@@ -654,19 +674,23 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 24px;
+            position: relative;
+            z-index: 2;
         }
         .credential-card {
             padding: 44px 40px;
-            border: 1px solid rgba(222, 194, 175, 0.1);
+            border: 1px solid rgba(222, 194, 175, 0.15);
             border-radius: 12px;
             transition: all 0.5s var(--ease-out);
             position: relative;
-            background: rgba(255,255,255,0.01);
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             overflow: hidden;
         }
         .credential-card:hover {
-            border-color: rgba(222, 194, 175, 0.3);
-            background: rgba(222, 194, 175, 0.05);
+            border-color: rgba(222, 194, 175, 0.4);
+            background: rgba(255,255,255,0.08);
             transform: translateY(-5px);
             box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
@@ -693,7 +717,7 @@
         }
         .credential-card p {
             font-size: 0.85rem;
-            color: rgba(247, 243, 232, 0.6);
+            color: rgba(247, 243, 232, 0.8);
             line-height: 1.8;
         }
 
@@ -1268,7 +1292,7 @@
 
     <section class="hero" id="hero">
         <div class="hero-bg">
-            <img src="https://github.com/agelmet/KAZANI/blob/main/2026-01-11.jpg?raw=true" alt="Αδαμαντία Καζάνη — Ψυχολόγος">
+            <img src="https://raw.githubusercontent.com/agelmet/KAZANI/refs/heads/main/2026-01-11-7.jpg" alt="Αδαμαντία Καζάνη — Ψυχολόγος">
         </div>
 
         <div class="hero-content">
@@ -1354,6 +1378,9 @@
     </section>
 
     <section class="credentials section-padding" id="credentials">
+        <div class="credentials-bg">
+            <img src="https://github.com/agelmet/KAZANI/blob/main/2026-01-11.jpg?raw=true" alt="Αδαμαντία Καζάνη">
+        </div>
         <div class="credentials-header">
             <span class="section-eyebrow reveal">Κλινικό Υπόβαθρο</span>
             <h2 class="section-title reveal reveal-delay-1">Τέσσερις Πυλώνες <em>Αξιοπιστίας</em></h2>
